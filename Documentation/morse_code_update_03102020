@@ -1,0 +1,16 @@
+April 10th Updates:
+
+Uploaded wiimote_connection_rev1b.py
+- This file contains the script where the user inputs the morse code and it will be interpreted
+- Once the wiimote is connected...
+	- 'Home' button enters into the script
+	- Since the counter stats immediately, start typing the morse code, otherwise spaces will be inputted automatically
+	- A = dot (0), and B = dash (1)
+	- '1' will allow you to restart if you mess up. Once 'reset' is displayed, immediately start entering the morse code
+	- '2' will end the sentence and call the interpreter function 
+		- This also exits out of the counter loop
+		- if the home button is pressed again, the user can type in another sentence
+	- If 'minus' and 'plus' are held down together, the wiiremote to shut off and the script will end
+
+Uploaded morse_code_interpreter_script_test.py
+- This file was used to hardcode an input and test out the interpreter code. This then got implemented into wiimote_connection_rev1b
