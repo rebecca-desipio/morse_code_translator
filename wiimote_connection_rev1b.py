@@ -21,6 +21,8 @@ print 'Press "home" button to start typing morse code'
 
 # function to interpret morse code (start)
 def morse_code_interpreter():
+    # EXAMPLE: ** x = [0, 1, 2, 1, 0, 0, 2, 2, 0, 1] --> AD A **
+    # defined alphabet in terms of ones and zeros
     A = [0, 1]; B = [1, 0, 0, 0];C = [1,0,1,0]
     D = [1, 0, 0]; E = [0]; F = [0, 0, 1, 0]
     G = [1, 1, 0]; H = [0, 0, 0, 0]; I = [0, 0]
@@ -36,23 +38,23 @@ def morse_code_interpreter():
     y = [];
     sentence = ''
 
-    print(len(x))
+    # iterates through x and creates a 2D array for each "letter"
     for ii in range(0,len(x)):
-        print('index: ',ii)
-        print('x value: ',x[ii])
-        print('y: ',y)
-        
+        # checks if the element is a dot or dash
+        # if yes, puts that element in a temp array which will later be added to y
+        # when put in 7, a 2D array is created 
         if (x[ii] == 0) | (x[ii] == 1):
             print("!")
             temp.append(x[ii])
             print('temp var: ',temp)
-
+        
         if ii != (len(x)-1):
+            # if there are two 2's in a row, a 3 will be representative in y as a space between words
             if (x[ii] == 2) & (x[ii+1] == 2):
                 y.append(temp)
                 temp = []
                 y.append([3])
-                
+            # only one 2 is found, then a 2 will be representative of a letter space
             elif (x[ii] == 2) & (x[ii+1] != 2):
                 if (x[ii-1] == 2):
                     print('skip')
@@ -60,11 +62,14 @@ def morse_code_interpreter():
                     y.append(temp)
                     temp = []
                     y.append([2])
-        
+        # when the end of the sentence is reached, the last temp variable made is appended to y
+        # this completes the iteration of the x array and completes creating the 2D array of y from x
         if ii == (len(x)-1):
             y.append(temp)
+            
+        # ** y = [[0, 1], [2], [1, 0, 0], [3], [0, 1]] **
 
-    # Iterate through the alphabet to put together the sentence
+    # Iterate through 2D array, y, to match elements of 2D array against the alphabet letters
     for jj in range(0,len(y)):
         if y[jj] == A:
             sentence = sentence + 'A'
@@ -122,27 +127,35 @@ def morse_code_interpreter():
             sentence = sentence + ' '
         
     print(sentence)
+    # ** AD A **
 # end of function
 
 time.sleep(3)
 
 wii.rpt_mode = cwiid.RPT_BTN
 
+# this allows the user to press wiimote buttons
 while True:
     buttons = wii.state['buttons']
+    
+    # press home button to be able to type morse code
     if (buttons & cwiid.BTN_HOME):
         print('Start typing sentence')
         time.sleep(button_delay)
 
-        x =[];
+        x =[]; # variable defined for morse code input (0 = dot, 1 = dash, 2 = space)
         counter = 0
         counter_delay = .05
-
+        
+        # counter starts
         while counter < 500:
             buttons = wii.state['buttons']
             counter = counter + 1
             time.sleep(counter_delay)
             
+            # if about 2 seconds passes, a letter space is considered, and a 2 is appended to x
+            # This is important later for when the x array is analyzed in the function
+            # NOTE: if two, 2's are inputted in a row, then a word space is considered. 
             if counter >= 40:
                 print('SPACE')
                 x.append(2)
@@ -150,6 +163,7 @@ while True:
                 print(x)
                 counter = 0
 
+            # this will enter a dot
             if (buttons & cwiid.BTN_A):
                 x.append(0)
                 print(x)
@@ -157,32 +171,32 @@ while True:
                 counter = 0
                 time.sleep(button_delay)
             
+            # this will enter a dash
             if (buttons & cwiid.BTN_B):
                 x.append(1)
                 print(x)
                 print('timer reset')
                 counter = 0
                 time.sleep(button_delay)
-                
+            
+            # allows the user to restart the sentence
             if (buttons & cwiid.BTN_1):
                 x = [];
                 time.sleep(button_delay+3)
                 print('reset')
-                
+            
+            # once finished with the sentence, click 2 for it to be analyzed
             if (buttons & cwiid.BTN_2):
-                morse_code_interpreter()
+                morse_code_interpreter() # function defined at the top
                 print('RESET ALL')
-                break
+                break # this exits the counter while loop and the user can either click 'home' to type a new sentence or 'plus & minus' to exit
                 
-            if (buttons - cwiid.BTN_PLUS - cwiid.BTN_MINUS == 0):
-                print '\nClosing connection ...'
-                # NOTE: This is how you RUMBLE the Wiimote
-                wii.rumble = 1
-                time.sleep(1)
-                wii.rumble = 0
-                exit(wii)
+    if (buttons - cwiid.BTN_PLUS - cwiid.BTN_MINUS == 0):
+        print '\nClosing connection ...'
+        wii.rumble = 1
+        time.sleep(1)
+        wii.rumble = 0
+        exit(wii)
                 
-
-        print(x)
 
 
