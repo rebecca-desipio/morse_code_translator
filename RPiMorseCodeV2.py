@@ -59,7 +59,6 @@ wii.rpt_mode = cwiid.RPT_BTN
 while True:
 
     buttons = wii.state['buttons']
- 
 
     #the user made an error - to start a letter over 
     
