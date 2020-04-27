@@ -2,12 +2,6 @@
 
 #Adapted from https://www.raspberrypi-spy.co.uk/2013/02/nintendo-wii-remote-python-and-the-raspberry-pi/
 
-#defined inputs
-    #A is dot
-    #B is dash
-    #A+B appends letter to word
-    #home initiates output of word
-
 import cwiid
 import time
 
@@ -37,7 +31,7 @@ print 'Press PLUS and MINUS together to disconnect and quit at any time.\n'
 print 'The controls to correct errors are as follows:\n'
 print 'Press RIGHT to restart the input of a letter.'
 print 'Press LEFT to restart the input of a word.'
-print '---------------------------------------------------------------------'
+print '---------------------------------------------------------------------\n'
 
 ###
 
