@@ -64,12 +64,14 @@ while True:
     
     if (buttons & cwiid.BTN_RIGHT):
         morse_input = ''
+	print '\n' + 'Your pattern has been cleared. Please try again.' + '\n'
         time.sleep(button_delay)
  
      #the user made an error - to start a word over 
  
     if (buttons & cwiid.BTN_LEFT):
         morse_output = ''
+	print '\n' + 'Your word has been cleared. Please try again.' + '\n'
         time.sleep(button_delay)
  
     #the user inputs a dot
@@ -91,7 +93,7 @@ while True:
     if (buttons & cwiid.BTN_UP):
         if morse_input in morse_dictionary:
 	    morse_output = morse_output + morse_dictionary[morse_input]
-	    print 'You submitted the letter ' + morse_dictionary[morse_input] + '\n' 
+	    print '\n' + 'You submitted the letter ' + morse_dictionary[morse_input] + '\n' 
 	else: 
 	    print 'I cannot find a letter with the code' + morse_input
 	    print 'Please try again'
@@ -113,9 +115,9 @@ while True:
         print '\nYour completed sentence translated from Morse code is:\n'
 	print(morse_final)
 	print '------------------------------------------------------'
-	#morse_input = ''
-	#morse_output = ''
-	#morse_final = ''
+	morse_input = ''
+	morse_output = ''
+	morse_final = ''
         time.sleep(button_delay)
 
     if (buttons - cwiid.BTN_PLUS - cwiid.BTN_MINUS == 0):
@@ -125,4 +127,3 @@ while True:
 	wii.rumble = 0
 	exit(wii)
 	break
-	
